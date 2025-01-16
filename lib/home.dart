@@ -68,6 +68,7 @@ class _HomeState extends State<Home> {
               _timerId?.cancel();
               _pickedTime = Duration.zero;
               _started = false;
+              LiveActivityManager.endLiveActivity();
             }
           },
         );
