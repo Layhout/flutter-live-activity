@@ -76,6 +76,38 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void _testUpdateLiveActivity() async {
+    await LiveActivityManager.startLiveActivity(data: {
+      'step': 0,
+      'distance': 3,
+    });
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    await LiveActivityManager.updateLiveActivity(data: {
+      'step': 1,
+      'distance': 3,
+    });
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    await LiveActivityManager.updateLiveActivity(data: {
+      'step': 2,
+      'distance': 3,
+    });
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    await LiveActivityManager.updateLiveActivity(data: {
+      'step': 3,
+      'distance': 3,
+    });
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    await LiveActivityManager.endLiveActivity();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +148,7 @@ class _HomeState extends State<Home> {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: _startTimer,
+                  onPressed: _testUpdateLiveActivity,
                   child: Text(_started ? 'Stop' : 'Start'),
                 ),
               ),

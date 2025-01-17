@@ -6,15 +6,16 @@
 //
 
 import ActivityKit
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct TestingWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var emoji: String
+        var step: Int?
     }
-    
+
     // Fixed non-changing properties about your activity go here!
     var name: String
 }
@@ -26,26 +27,31 @@ struct TestingWidgetLiveActivity: Widget {
             VStack(spacing: 12) {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("On the way to you").font(.system(size: 20, weight: .bold)).foregroundStyle(.white)
-                        Text("Estimated delivery at 13:10").font(.system(size: 16, weight: .light)).foregroundStyle(.white).opacity(0.7)
+                        Text("On the way to you").font(
+                            .system(size: 20, weight: .bold)
+                        ).foregroundStyle(.white)
+                        Text("Estimated delivery at 13:10").font(
+                            .system(size: 16, weight: .light)
+                        ).foregroundStyle(.white).opacity(0.7)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     Image("coffee_hub").resizable()
                         .frame(width: 42, height: 42)
                         .clipShape(.rect(cornerRadius: 8))
                 }
-                VStack{
-                    HStack(alignment: .bottom){
-                        Image("moto_delivery").resizable().frame(width: 42, height: 32).frame(maxWidth: .infinity, alignment: .leading)
-                        Image("location_marker").resizable().frame(width: 24, height: 24)
-                    }.frame(maxWidth: .infinity, alignment: .bottom)
-                    ProgressView(value: 50, total: 100, label: { EmptyView() }, currentValueLabel: { EmptyView() }).tint(Color("Brand"))
+                VStack {
+                    ProgressView(
+                        value: CGFloat(context.state.step ?? 0), total: 3,
+                        label: { EmptyView() },
+                        currentValueLabel: { EmptyView() }
+                    )
+                    .progressViewStyle(LinearWithImageProgressStyle())
                 }
-                
+
             }
             .padding(12)
             .activityBackgroundTint(Color.black.opacity(0.3))
             .activitySystemActionForegroundColor(Color.white)
-            
+
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
@@ -80,18 +86,58 @@ extension TestingWidgetAttributes {
 }
 
 extension TestingWidgetAttributes.ContentState {
-    fileprivate static var smiley: TestingWidgetAttributes.ContentState {
-        TestingWidgetAttributes.ContentState(emoji: "😀")
+    fileprivate static var s0: TestingWidgetAttributes.ContentState {
+        TestingWidgetAttributes.ContentState(emoji: "😀", step: 0)
     }
-    
-    fileprivate static var starEyes: TestingWidgetAttributes.ContentState {
-        TestingWidgetAttributes.ContentState(emoji: "🤩")
+
+    fileprivate static var s1: TestingWidgetAttributes.ContentState {
+        TestingWidgetAttributes.ContentState(emoji: "🤩", step: 1)
+    }
+
+    fileprivate static var s2: TestingWidgetAttributes.ContentState {
+        TestingWidgetAttributes.ContentState(emoji: "😀", step: 2)
+    }
+
+    fileprivate static var s3: TestingWidgetAttributes.ContentState {
+        TestingWidgetAttributes.ContentState(emoji: "😀", step: 3)
     }
 }
 
 #Preview("Notification", as: .content, using: TestingWidgetAttributes.preview) {
     TestingWidgetLiveActivity()
 } contentStates: {
-    TestingWidgetAttributes.ContentState.smiley
-    TestingWidgetAttributes.ContentState.starEyes
+    TestingWidgetAttributes.ContentState.s0
+    TestingWidgetAttributes.ContentState.s1
+    TestingWidgetAttributes.ContentState.s2
+    TestingWidgetAttributes.ContentState.s3
+}
+
+struct LinearWithImageProgressStyle: ProgressViewStyle {
+    let markerImage: some View = Image("moto_delivery").resizable().frame(
+        width: 42, height: 32)
+    let goalImage: some View = Image("location_marker").resizable().frame(
+        width: 24, height: 24)
+
+    func makeBody(configuration: Configuration) -> some View {
+        let fractionCompleted = configuration.fractionCompleted ?? 0
+
+        VStack {
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Image("moto_delivery").resizable().frame(
+                        width: 42, height: 32
+                    ).frame(
+                        width: geometry.size.width
+                            * min(0.93, max(0.12, fractionCompleted)),
+                        alignment: .trailing
+                    )
+                    Image("location_marker").resizable().frame(
+                        width: 24, height: 24
+                    ).frame(maxWidth: .infinity, alignment: .trailing)
+                }
+            }.frame(height: 32)
+            ProgressView(value: configuration.fractionCompleted).tint(
+                Color("Brand"))
+        }
+    }
 }

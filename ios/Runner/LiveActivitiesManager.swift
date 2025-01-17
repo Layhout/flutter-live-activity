@@ -12,7 +12,7 @@ import Foundation
 class LiveActivitiesManager {
     private static var managerChannel: FlutterMethodChannel? = nil
     private static var activity: Activity<MyNativeWidgetAttributes>? = nil
-    
+
     public static func register(controller: FlutterViewController) {
         managerChannel = FlutterMethodChannel(
             name: "my.method.channel",
@@ -20,10 +20,11 @@ class LiveActivitiesManager {
         )
         managerChannel?.setMethodCallHandler(handleMethodCall)
     }
-    
-    static func handleMethodCall(call: FlutterMethodCall, result: FlutterResult) {
-        var data = call.arguments as? Dictionary<String,Any> ?? [String: Any]()
-        
+
+    static func handleMethodCall(call: FlutterMethodCall, result: FlutterResult)
+    {
+        let data = call.arguments as? [String: Any] ?? [String: Any]()
+
         switch call.method {
         case "startLiveActivity":
             LiveActivitiesManager.startLiveActivity(data: data, result: result)
@@ -38,59 +39,91 @@ class LiveActivitiesManager {
             result(FlutterMethodNotImplemented)
         }
     }
-    
+
     static func startLiveActivity(data: [String: Any], result: FlutterResult) {
         if #unavailable(iOS 16.1) {
-            result(FlutterError(code: "1", message: "Live activity supported on 16.1 and higher", details: nil))
+            result(
+                FlutterError(
+                    code: "1",
+                    message: "Live activity supported on 16.1 and higher",
+                    details: nil))
         }
-        
-        let endTime: Date = Date(timeIntervalSince1970: Double(data["endTime"] as? Int ?? 1000) / 1000)
-        
+
+        //        let endTime: Date = Date(
+        //            timeIntervalSince1970: Double(data["endTime"] as? Int ?? 1000)
+        //                / 1000)
+        let step: Int = data["step"] as? Int ?? 0
+        let distance: Int = data["distance"] as? Int ?? 0
+
         let attributes = MyNativeWidgetAttributes()
         let state = MyNativeWidgetAttributes.ContentState(
-            endTime: endTime
+            step: step, distance: distance
         )
-        
+
         if #available(iOS 16.1, *) {
             do {
                 activity = try Activity<MyNativeWidgetAttributes>.request(
                     attributes: attributes,
                     content: .init(state: state, staleDate: nil),
                     pushType: nil)
-                
+
                 result("Success")
             } catch let error {
-                result(FlutterError(code: "2", message: "Error requesting live activity", details: nil))
+                result(
+                    FlutterError(
+                        code: "2", message: "Error requesting live activity",
+                        details: nil))
             }
         }
     }
-    
+
     static func updateLiveActivity(data: [String: Any], result: FlutterResult) {
         if #unavailable(iOS 16.1) {
-            result(FlutterError(code: "1", message: "Live activity supported on 16.1 and higher", details: nil))
+            result(
+                FlutterError(
+                    code: "1",
+                    message: "Live activity supported on 16.1 and higher",
+                    details: nil))
         }
-        
+
         if #available(iOS 16.1, *) {
+            //            let endTime: Date = Date(
+            //                timeIntervalSince1970: Double(data["endTime"] as? Int ?? 1000)
+            //                    / 1000)
+            let step: Int = data["step"] as? Int ?? 0
+            let distance: Int = data["distance"] as? Int ?? 0
+
+            let state = MyNativeWidgetAttributes.ContentState(
+                step: step, distance: distance)
+
             Task {
-                let state = MyNativeWidgetAttributes.ContentState()
-                
-                await activity?.update(ActivityContent<MyNativeWidgetAttributes.ContentState>(state: state, staleDate: nil))
+                await activity?.update(
+                    ActivityContent<MyNativeWidgetAttributes.ContentState>(
+                        state: state, staleDate: nil))
             }
-            
+
             result("Success")
         }
     }
-    
+
     static func endLiveActivity(data: [String: Any], result: FlutterResult) {
         if #unavailable(iOS 16.1) {
-            result(FlutterError(code: "1", message: "Live activity supported on 16.1 and higher", details: nil))
+            result(
+                FlutterError(
+                    code: "1",
+                    message: "Live activity supported on 16.1 and higher",
+                    details: nil))
         }
-        
+
         if #available(iOS 16.1, *) {
             Task {
-                await activity?.end(nil, dismissalPolicy: .after(Calendar.current.date(byAdding: .second, value: 5, to: Date())!))
+                await activity?.end(
+                    nil,
+                    dismissalPolicy: .after(
+                        Calendar.current.date(
+                            byAdding: .second, value: 5, to: Date())!))
             }
-            
+
             result("Success")
         }
     }
