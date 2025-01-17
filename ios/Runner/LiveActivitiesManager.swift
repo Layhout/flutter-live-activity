@@ -88,7 +88,7 @@ class LiveActivitiesManager {
         
         if #available(iOS 16.1, *) {
             Task {
-                await activity?.end(nil, dismissalPolicy: .immediate)
+                await activity?.end(nil, dismissalPolicy: .after(Calendar.current.date(byAdding: .second, value: 5, to: Date())!))
             }
             
             result("Success")

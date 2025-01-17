@@ -29,13 +29,9 @@ struct TestingWidgetLiveActivity: Widget {
                         Text("On the way to you").font(.system(size: 20, weight: .bold)).foregroundStyle(.white)
                         Text("Estimated delivery at 13:10").font(.system(size: 16, weight: .light)).foregroundStyle(.white).opacity(0.7)
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    AsyncImage(url: URL(string: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg")) { image in
-                        image.resizable()
-                    } placeholder: {
-                        Color.black.opacity(0.1)
-                    }
-                    .frame(width: 42, height: 42)
-                    .clipShape(.rect(cornerRadius: 8))
+                    Image("coffee_hub").resizable()
+                        .frame(width: 42, height: 42)
+                        .clipShape(.rect(cornerRadius: 8))
                 }
                 VStack{
                     HStack(alignment: .bottom){
