@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,10 @@
 		EE1B44482D3761DD002BF8B1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */; };
 		EE1B44592D3761DF002BF8B1 /* MyNativeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EE1B44432D3761DC002BF8B1 /* MyNativeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE1B45902D37A1EF002BF8B1 /* LiveActivitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */; };
+		EEA9009E2D3DF7AC0064083D /* LiveActivitiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */; };
+		EEA900A42D3E01AB0064083D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44452D3761DC002BF8B1 /* WidgetKit.framework */; };
+		EEA900A52D3E01AB0064083D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */; };
+		EEA900B22D3E01AD0064083D /* LiveActivitiesAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEA900A32D3E01AB0064083D /* LiveActivitiesAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EECCF6642D38E45100BB0BA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44452D3761DC002BF8B1 /* WidgetKit.framework */; };
 		EECCF6652D38E45100BB0BA1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */; };
 		EECCF6722D38E45300BB0BA1 /* TestingWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EECCF6632D38E45100BB0BA1 /* TestingWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -37,6 +41,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = EE1B44422D3761DC002BF8B1;
 			remoteInfo = MyNativeWidgetExtension;
+		};
+		EEA900B02D3E01AD0064083D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEA900A22D3E01AB0064083D;
+			remoteInfo = LiveActivitiesAppExtension;
 		};
 		EECCF6702D38E45300BB0BA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -66,6 +77,7 @@
 			files = (
 				EE1B44592D3761DF002BF8B1 /* MyNativeWidgetExtension.appex in Embed Foundation Extensions */,
 				EECCF6722D38E45300BB0BA1 /* TestingWidgetExtension.appex in Embed Foundation Extensions */,
+				EEA900B22D3E01AD0064083D /* LiveActivitiesAppExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,36 +105,30 @@
 		EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		EE1B44602D3761E7002BF8B1 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesManager.swift; sourceTree = "<group>"; };
+		EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesController.swift; sourceTree = "<group>"; };
+		EEA900A32D3E01AB0064083D /* LiveActivitiesAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LiveActivitiesAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECCF6632D38E45100BB0BA1 /* TestingWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TestingWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EE1B445E2D3761DF002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EEA900B72D3E01AD0064083D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = EE1B44422D3761DC002BF8B1 /* MyNativeWidgetExtension */;
+			target = EEA900A22D3E01AB0064083D /* LiveActivitiesAppExtension */;
 		};
-		EE1B44E52D376A10002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EEA900B92D3E01ED0064083D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				MyNativeWidgetLiveActivity.swift,
+				LiveActivitiesAppLiveActivity.swift,
 			);
 			target = 97C146ED1CF9000F007C117D /* Runner */;
-		};
-		EECCF6772D38E45300BB0BA1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = EECCF6622D38E45100BB0BA1 /* TestingWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EE1B44492D3761DD002BF8B1 /* MyNativeWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EE1B44E52D376A10002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, EE1B445E2D3761DF002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MyNativeWidget; sourceTree = "<group>"; };
-		EECCF6662D38E45100BB0BA1 /* TestingWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EECCF6772D38E45300BB0BA1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestingWidget; sourceTree = "<group>"; };
+		EEA900A62D3E01AB0064083D /* LiveActivitiesApp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EEA900B92D3E01ED0064083D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, EEA900B72D3E01AD0064083D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LiveActivitiesApp; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +145,15 @@
 			files = (
 				EE1B44482D3761DD002BF8B1 /* SwiftUI.framework in Frameworks */,
 				EE1B44462D3761DD002BF8B1 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEA900A02D3E01AB0064083D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEA900A52D3E01AB0064083D /* SwiftUI.framework in Frameworks */,
+				EEA900A42D3E01AB0064083D /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,8 +193,7 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				EE1B44492D3761DD002BF8B1 /* MyNativeWidget */,
-				EECCF6662D38E45100BB0BA1 /* TestingWidget */,
+				EEA900A62D3E01AB0064083D /* LiveActivitiesApp */,
 				EE1B44442D3761DC002BF8B1 /* Frameworks */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
@@ -193,6 +207,7 @@
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
 				EE1B44432D3761DC002BF8B1 /* MyNativeWidgetExtension.appex */,
 				EECCF6632D38E45100BB0BA1 /* TestingWidgetExtension.appex */,
+				EEA900A32D3E01AB0064083D /* LiveActivitiesAppExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,6 +215,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */,
 				EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */,
 				EE1B44602D3761E7002BF8B1 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
@@ -260,6 +276,7 @@
 			dependencies = (
 				EE1B44582D3761DF002BF8B1 /* PBXTargetDependency */,
 				EECCF6712D38E45300BB0BA1 /* PBXTargetDependency */,
+				EEA900B12D3E01AD0064083D /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -278,14 +295,33 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				EE1B44492D3761DD002BF8B1 /* MyNativeWidget */,
-			);
 			name = MyNativeWidgetExtension;
 			packageProductDependencies = (
 			);
 			productName = MyNativeWidgetExtension;
 			productReference = EE1B44432D3761DC002BF8B1 /* MyNativeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		EEA900A22D3E01AB0064083D /* LiveActivitiesAppExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEA900B32D3E01AD0064083D /* Build configuration list for PBXNativeTarget "LiveActivitiesAppExtension" */;
+			buildPhases = (
+				EEA9009F2D3E01AB0064083D /* Sources */,
+				EEA900A02D3E01AB0064083D /* Frameworks */,
+				EEA900A12D3E01AB0064083D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EEA900A62D3E01AB0064083D /* LiveActivitiesApp */,
+			);
+			name = LiveActivitiesAppExtension;
+			packageProductDependencies = (
+			);
+			productName = LiveActivitiesAppExtension;
+			productReference = EEA900A32D3E01AB0064083D /* LiveActivitiesAppExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		EECCF6622D38E45100BB0BA1 /* TestingWidgetExtension */ = {
@@ -299,9 +335,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				EECCF6662D38E45100BB0BA1 /* TestingWidget */,
 			);
 			name = TestingWidgetExtension;
 			packageProductDependencies = (
@@ -332,6 +365,9 @@
 					EE1B44422D3761DC002BF8B1 = {
 						CreatedOnToolsVersion = 16.1;
 					};
+					EEA900A22D3E01AB0064083D = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					EECCF6622D38E45100BB0BA1 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -354,6 +390,7 @@
 				331C8080294A63A400263BE5 /* RunnerTests */,
 				EE1B44422D3761DC002BF8B1 /* MyNativeWidgetExtension */,
 				EECCF6622D38E45100BB0BA1 /* TestingWidgetExtension */,
+				EEA900A22D3E01AB0064083D /* LiveActivitiesAppExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -378,6 +415,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE1B44412D3761DC002BF8B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEA900A12D3E01AB0064083D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -442,11 +486,19 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				EE1B45902D37A1EF002BF8B1 /* LiveActivitiesManager.swift in Sources */,
+				EEA9009E2D3DF7AC0064083D /* LiveActivitiesController.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE1B443F2D3761DC002BF8B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEA9009F2D3E01AB0064083D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -472,6 +524,11 @@
 			isa = PBXTargetDependency;
 			target = EE1B44422D3761DC002BF8B1 /* MyNativeWidgetExtension */;
 			targetProxy = EE1B44572D3761DF002BF8B1 /* PBXContainerItemProxy */;
+		};
+		EEA900B12D3E01AD0064083D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEA900A22D3E01AB0064083D /* LiveActivitiesAppExtension */;
+			targetProxy = EEA900B02D3E01AD0064083D /* PBXContainerItemProxy */;
 		};
 		EECCF6712D38E45300BB0BA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -909,6 +966,123 @@
 			};
 			name = Profile;
 		};
+		EEA900B42D3E01AD0064083D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LiveActivitiesApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiveActivitiesApp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.fal.LiveActivitiesApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEA900B52D3E01AD0064083D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LiveActivitiesApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiveActivitiesApp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.fal.LiveActivitiesApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EEA900B62D3E01AD0064083D /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LiveActivitiesApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiveActivitiesApp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.fal.LiveActivitiesApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
 		EECCF6732D38E45300BB0BA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1062,6 +1236,16 @@
 				EE1B445B2D3761DF002BF8B1 /* Debug */,
 				EE1B445C2D3761DF002BF8B1 /* Release */,
 				EE1B445D2D3761DF002BF8B1 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEA900B32D3E01AD0064083D /* Build configuration list for PBXNativeTarget "LiveActivitiesAppExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEA900B42D3E01AD0064083D /* Debug */,
+				EEA900B52D3E01AD0064083D /* Release */,
+				EEA900B62D3E01AD0064083D /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

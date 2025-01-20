@@ -1,19 +1,17 @@
 //
-//  MyNativeWidgetLiveActivity.swift
-//  MyNativeWidget
+//  LiveActivitiesAppLiveActivity.swift
+//  LiveActivitiesApp
 //
-//  Created by Layhout Chea on 15/1/25.
+//  Created by Layhout Chea on 20/1/25.
 //
 
 import ActivityKit
-import SwiftUI
 import WidgetKit
+import SwiftUI
 
-struct MyNativeWidgetAttributes: ActivityAttributes {
+struct LiveActivitiesAppAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
-        //        var emoji: String
-        var endTime: Date?
         var step: Int
         var distance: Int
         var title: String
@@ -24,14 +22,13 @@ struct MyNativeWidgetAttributes: ActivityAttributes {
     var id: String = UUID().uuidString
 }
 
-@available(iOS 16.1, *)
-struct MyNativeWidgetLiveActivity: Widget {
+struct LiveActivitiesAppLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: MyNativeWidgetAttributes.self) { context in
+        ActivityConfiguration(for: LiveActivitiesAppAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 12) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 4) {
                         Text(context.state.title)
                             .font(.system(size: 20, weight: .bold))
                             .foregroundStyle(.white)
@@ -58,76 +55,68 @@ struct MyNativeWidgetLiveActivity: Widget {
             .activitySystemActionForegroundColor(Color.white)
 
         } dynamicIsland: { context in
-            //            let timeRange: ClosedRange<Date> =
-            //                Date()...(context.state.endTime ?? Date())
-
-            return DynamicIsland {
+            DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     Text("Leading")
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    //                    Text("Trailing")
-                    //                    ProgressView(
-                    //                        timerInterval: timeRange,
-                    //                        countsDown: true,
-                    //                        label: {
-                    //                            Text("Timer")
-                    //                        },
-                    //                        currentValueLabel: {
-                    //                            Text(timerInterval: timeRange, countsDown: true)
-                    //                                .font(.system(size: 16))
-                    //                                .minimumScaleFactor(0.8)
-                    //                                .contentTransition(
-                    //                                    .numericText()
-                    //                                ).monospacedDigit()
-                    //                        }
-                    //                    )
-                    //                    .progressViewStyle(.circular).tint(.blue)
+                    Text("Trailing")
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    //                    Text("Bottom \(context.state.emoji)")
                     Text("Bottom")
                     // more content
                 }
             } compactLeading: {
-                Text("Timer")
+                Text("L")
             } compactTrailing: {
-                //                Text("T \(context.state.emoji)")
-                //                ProgressView(value: 0.5, total: 1) {
-                //                    let healthLevel = Int(0.5 * 100)
-                //                    Text("0.5")
-                //                        .accessibilityLabel("Health level at 0.5 percent.")
-                //                }
-                //                .progressViewStyle(.circular)
-                //                .tint(Color.green)
-                //                HStack {
-                //                    Text(
-                //                        timerInterval: timeRange, countsDown: true,
-                //                        showsHours: false
-                //                    )
-                //                    .minimumScaleFactor(0.8)
-                //                    .contentTransition(
-                //                        .numericText()
-                //                    ).monospacedDigit()
-                //                    .multilineTextAlignment(.trailing)
-                //                    ProgressView(
-                //                        timerInterval: timeRange,
-                //                        countsDown: true,
-                //                        label: { EmptyView() },
-                //                        currentValueLabel: { EmptyView() }
-                //                    )
-                //                    .progressViewStyle(.circular).tint(.blue)
-                //                }
+                Text("T")
             } minimal: {
-                //                Text(context.state.emoji)
-                Text("minimal")
+                Text("M")
             }
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
         }
     }
+}
+
+extension LiveActivitiesAppAttributes {
+    fileprivate static var preview: LiveActivitiesAppAttributes {
+        LiveActivitiesAppAttributes()
+    }
+}
+
+extension LiveActivitiesAppAttributes.ContentState {
+    fileprivate static var placed: LiveActivitiesAppAttributes.ContentState {
+        LiveActivitiesAppAttributes.ContentState(
+            step: 0, distance: 3, title: "Order Placed", description: "Your order has been placed"
+        )
+     }
+    
+    fileprivate static var prepare: LiveActivitiesAppAttributes.ContentState {
+        LiveActivitiesAppAttributes.ContentState(
+            step: 1, distance: 3, title: "Preparing Order", description: "We are preparing your order"
+        )
+     }
+    
+    fileprivate static var delivering: LiveActivitiesAppAttributes.ContentState {
+        LiveActivitiesAppAttributes.ContentState(
+            step: 2, distance: 3, title: "Delivering Order", description: "Delivering by 12:30 PM"
+        )
+     }
+    
+    fileprivate static var completed: LiveActivitiesAppAttributes.ContentState {
+        LiveActivitiesAppAttributes.ContentState(
+            step: 3, distance: 3, title: "Completed", description: "Thank you for ordering with us! Enjoy your meal!"
+        )
+     }
+}
+
+#Preview("Notification", as: .content, using: LiveActivitiesAppAttributes.preview) {
+   LiveActivitiesAppLiveActivity()
+} contentStates: {
+    LiveActivitiesAppAttributes.ContentState.placed
 }
 
 struct LinearWithImageProgressStyle: ProgressViewStyle {

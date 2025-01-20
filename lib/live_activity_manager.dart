@@ -12,7 +12,7 @@ class LiveActivityManager {
 
   static bool _isInitialized = false;
   static late MethodChannel _platform;
-  static bool get _authorizedCall {
+  static bool get _isAuthorizedCall {
     if (!_isInitialized) {
       debugPrint('LiveActivityManager is not initialized');
     }
@@ -33,7 +33,7 @@ class LiveActivityManager {
   }
 
   static Future<void> startLiveActivity({Map<String, dynamic>? data}) async {
-    if (!_authorizedCall) {
+    if (!_isAuthorizedCall) {
       return;
     }
 
@@ -48,7 +48,7 @@ class LiveActivityManager {
   }
 
   static Future<void> updateLiveActivity({Map<String, dynamic>? data}) async {
-    if (!_authorizedCall) {
+    if (!_isAuthorizedCall) {
       return;
     }
 
@@ -63,7 +63,7 @@ class LiveActivityManager {
   }
 
   static Future<void> endLiveActivity({Map<String, dynamic>? data}) async {
-    if (!_authorizedCall) {
+    if (!_isAuthorizedCall) {
       return;
     }
 
