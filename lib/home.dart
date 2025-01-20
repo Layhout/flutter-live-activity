@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    LiveActivityManager.init('my.method.channel');
+    // LiveActivityManager.init('my.method.channel');
   }
 
   @override
@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
         },
       );
 
-      LiveActivityManager.endLiveActivity();
+      // LiveActivityManager.endLiveActivity();
 
       return;
     }
@@ -52,11 +52,11 @@ class _HomeState extends State<Home> {
       _started = true;
     });
 
-    LiveActivityManager.startLiveActivity(
-      data: {
-        'endTime': _endTime.millisecondsSinceEpoch,
-      },
-    );
+    // LiveActivityManager.startLiveActivity(
+    //   data: {
+    //     'endTime': _endTime.millisecondsSinceEpoch,
+    //   },
+    // );
 
     _timerId = Timer.periodic(
       const Duration(seconds: 1),
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
               _timerId?.cancel();
               _pickedTime = Duration.zero;
               _started = false;
-              LiveActivityManager.endLiveActivity();
+              // LiveActivityManager.endLiveActivity();
             }
           },
         );
@@ -77,43 +77,43 @@ class _HomeState extends State<Home> {
   }
 
   void _testUpdateLiveActivity() async {
-    await LiveActivityManager.startLiveActivity(data: {
-      'title': 'Placed',
-      'description': 'Your order has been placed',
-      'step': 0,
-      'distance': 3,
-    });
+    // await LiveActivityManager.startLiveActivity(data: {
+    //   'title': 'Placed',
+    //   'description': 'Your order has been placed',
+    //   'step': 0,
+    //   'distance': 3,
+    // });
 
-    await Future.delayed(const Duration(seconds: 5));
+    // await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Preparing',
-      'description': 'We are preparing your order',
-      'step': 1,
-      'distance': 3,
-    });
+    // await LiveActivityManager.updateLiveActivity(data: {
+    //   'title': 'Preparing',
+    //   'description': 'We are preparing your order',
+    //   'step': 1,
+    //   'distance': 3,
+    // });
 
-    await Future.delayed(const Duration(seconds: 5));
+    // await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Delivering',
-      'description': 'We are delivering your order',
-      'step': 2,
-      'distance': 3,
-    });
+    // await LiveActivityManager.updateLiveActivity(data: {
+    //   'title': 'Delivering',
+    //   'description': 'We are delivering your order',
+    //   'step': 2,
+    //   'distance': 3,
+    // });
 
-    await Future.delayed(const Duration(seconds: 5));
+    // await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Completed',
-      'description': 'All Done! 👌',
-      'step': 3,
-      'distance': 3,
-    });
+    // await LiveActivityManager.updateLiveActivity(data: {
+    //   'title': 'Completed',
+    //   'description': 'All Done! 👌',
+    //   'step': 3,
+    //   'distance': 3,
+    // });
 
-    await Future.delayed(const Duration(seconds: 5));
+    // await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.endLiveActivity();
+    // await LiveActivityManager.endLiveActivity();
   }
 
   @override

@@ -11,8 +11,8 @@ import Foundation
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
         
-        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
-        LiveActivitiesManager.register(controller: controller)
+//        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+//        LiveActivitiesManager.register(controller: controller)
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
