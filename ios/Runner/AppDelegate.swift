@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import ActivityKit
 import Foundation
 
 @main
