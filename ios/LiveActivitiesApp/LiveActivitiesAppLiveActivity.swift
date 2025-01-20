@@ -6,8 +6,8 @@
 //
 
 import ActivityKit
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct LiveActivitiesAppAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
@@ -24,7 +24,8 @@ struct LiveActivitiesAppAttributes: ActivityAttributes {
 
 struct LiveActivitiesAppLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: LiveActivitiesAppAttributes.self) { context in
+        ActivityConfiguration(for: LiveActivitiesAppAttributes.self) {
+            context in
             // Lock screen/banner UI goes here
             VStack(spacing: 12) {
                 HStack {
@@ -51,7 +52,7 @@ struct LiveActivitiesAppLiveActivity: Widget {
                 ).progressViewStyle(LinearWithImageProgressStyle())
             }
             .padding(12)
-            .activityBackgroundTint(Color.black.opacity(0.3))
+            .activityBackgroundTint(Color.black.opacity(0.5))
             .activitySystemActionForegroundColor(Color.white)
 
         } dynamicIsland: { context in
@@ -90,33 +91,43 @@ extension LiveActivitiesAppAttributes {
 extension LiveActivitiesAppAttributes.ContentState {
     fileprivate static var placed: LiveActivitiesAppAttributes.ContentState {
         LiveActivitiesAppAttributes.ContentState(
-            step: 0, distance: 3, title: "Order Placed", description: "Your order has been placed"
+            step: 0, distance: 3, title: "Order Placed",
+            description: "Your order has been placed"
         )
-     }
-    
+    }
+
     fileprivate static var prepare: LiveActivitiesAppAttributes.ContentState {
         LiveActivitiesAppAttributes.ContentState(
-            step: 1, distance: 3, title: "Preparing Order", description: "We are preparing your order"
+            step: 1, distance: 3, title: "Preparing Order",
+            description: "We are preparing your order"
         )
-     }
-    
-    fileprivate static var delivering: LiveActivitiesAppAttributes.ContentState {
+    }
+
+    fileprivate static var delivering: LiveActivitiesAppAttributes.ContentState
+    {
         LiveActivitiesAppAttributes.ContentState(
-            step: 2, distance: 3, title: "Delivering Order", description: "Delivering by 12:30 PM"
+            step: 2, distance: 3, title: "Delivering Order",
+            description: "Delivering by 12:30 PM"
         )
-     }
-    
+    }
+
     fileprivate static var completed: LiveActivitiesAppAttributes.ContentState {
         LiveActivitiesAppAttributes.ContentState(
-            step: 3, distance: 3, title: "Completed", description: "Thank you for ordering with us! Enjoy your meal!"
+            step: 3, distance: 3, title: "Completed",
+            description: "Thank you for ordering with us! Enjoy!"
         )
-     }
+    }
 }
 
-#Preview("Notification", as: .content, using: LiveActivitiesAppAttributes.preview) {
-   LiveActivitiesAppLiveActivity()
+#Preview(
+    "Notification", as: .content, using: LiveActivitiesAppAttributes.preview
+) {
+    LiveActivitiesAppLiveActivity()
 } contentStates: {
     LiveActivitiesAppAttributes.ContentState.placed
+    LiveActivitiesAppAttributes.ContentState.prepare
+    LiveActivitiesAppAttributes.ContentState.delivering
+    LiveActivitiesAppAttributes.ContentState.completed
 }
 
 struct LinearWithImageProgressStyle: ProgressViewStyle {

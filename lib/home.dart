@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:fal/live_activity_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,68 +11,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool _started = false;
-  Duration _timeLeft = Duration.zero;
-  Duration _pickedTime = Duration.zero;
-  DateTime _endTime = DateTime.now();
-  Timer? _timerId;
-
   @override
   void initState() {
     super.initState();
 
     LiveActivityManager.init('my.method.channel');
-  }
-
-  @override
-  void dispose() {
-    _timerId?.cancel();
-    super.dispose();
-  }
-
-  void _startTimer() {
-    if (_started) {
-      setState(
-        () {
-          _started = false;
-          _timerId?.cancel();
-        },
-      );
-
-      LiveActivityManager.endLiveActivity();
-
-      return;
-    }
-
-    setState(() {
-      _endTime =
-          DateTime.now().add(const Duration(seconds: 1)).add(_pickedTime);
-      _timeLeft = _endTime.difference(DateTime.now());
-      _started = true;
-    });
-
-    LiveActivityManager.startLiveActivity(
-      data: {
-        'endTime': _endTime.millisecondsSinceEpoch,
-      },
-    );
-
-    _timerId = Timer.periodic(
-      const Duration(seconds: 1),
-      (_) {
-        setState(
-          () {
-            _timeLeft = _endTime.difference(DateTime.now());
-            if (_timeLeft.inSeconds <= 0) {
-              _timerId?.cancel();
-              _pickedTime = Duration.zero;
-              _started = false;
-              LiveActivityManager.endLiveActivity();
-            }
-          },
-        );
-      },
-    );
   }
 
   void _testUpdateLiveActivity() async {
@@ -127,29 +69,19 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Simple Timer",
+                "Testing Live Activity",
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
-              if (!_started)
-                SizedBox(
-                  height: 150,
-                  child: CupertinoTimerPicker(
-                    mode: CupertinoTimerPickerMode.ms,
-                    onTimerDurationChanged: (value) {
-                      _pickedTime = value;
-                    },
-                  ),
-                )
-              else
-                Text(
-                  "${_timeLeft.inMinutes.toString().padLeft(2, '0')}:${_timeLeft.inSeconds.remainder(60).toString().padLeft(2, '0')}",
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
+              Text(
+                "Press \"Simulate Place an Order,\" swipe down, and view the live activity on your lock screen.",
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(
                 height: 16,
               ),
@@ -157,7 +89,7 @@ class _HomeState extends State<Home> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: _testUpdateLiveActivity,
-                  child: Text(_started ? 'Stop' : 'Start'),
+                  child: const Text('Simulate place an order'),
                 ),
               ),
             ],

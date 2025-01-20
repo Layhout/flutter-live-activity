@@ -25,7 +25,7 @@ class LiveActivitiesManager {
 
                 return false
             }
-           
+
             return true
         } else {
             result(
@@ -110,14 +110,13 @@ class LiveActivitiesManager {
             }
 
             await activity.update(activityContent!)
+            result(nil)
         }
-
-        result(nil)
     }
 
     static func endLiveActivity(
         result: @escaping FlutterResult,
-        state: LiveActivitiesAppAttributes.ContentState?, staleIn: Int?,
+        state: LiveActivitiesAppAttributes.ContentState? = nil, staleIn: Int? = nil,
         dismissalPolicy: ActivityUIDismissalPolicy
     ) {
         if !isAuthorizedCall(result: result) {
@@ -133,8 +132,8 @@ class LiveActivitiesManager {
                         activityContent, dismissalPolicy: dismissalPolicy)
                 }
             }
-        }
 
-        result("Success")
+            result(nil)
+        }
     }
 }
