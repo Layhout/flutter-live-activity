@@ -5,8 +5,6 @@ import Foundation
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-    var liveActivity: Activity<MyNativeWidgetAttributes>?
-    
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?

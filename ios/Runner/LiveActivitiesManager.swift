@@ -54,10 +54,13 @@ class LiveActivitiesManager {
         //                / 1000)
         let step: Int = data["step"] as? Int ?? 0
         let distance: Int = data["distance"] as? Int ?? 0
+        let title: String = data["title"] as? String ?? ""
+        let description: String = data["description"] as? String ?? ""
 
         let attributes = MyNativeWidgetAttributes()
         let state = MyNativeWidgetAttributes.ContentState(
-            step: step, distance: distance
+            step: step, distance: distance, title: title,
+            description: description
         )
 
         if #available(iOS 16.1, *) {
@@ -92,9 +95,14 @@ class LiveActivitiesManager {
             //                    / 1000)
             let step: Int = data["step"] as? Int ?? 0
             let distance: Int = data["distance"] as? Int ?? 0
+            let title: String = data["title"] as? String ?? ""
+            let description: String = data["description"] as? String ?? ""
 
+            let attributes = MyNativeWidgetAttributes()
             let state = MyNativeWidgetAttributes.ContentState(
-                step: step, distance: distance)
+                step: step, distance: distance, title: title,
+                description: description
+            )
 
             Task {
                 await activity?.update(

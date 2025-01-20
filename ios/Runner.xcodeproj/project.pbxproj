@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -104,7 +104,7 @@
 			);
 			target = EE1B44422D3761DC002BF8B1 /* MyNativeWidgetExtension */;
 		};
-		EE1B44E52D376A10002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EECB2C952D3E30E800E8B0B2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				MyNativeWidgetLiveActivity.swift,
@@ -121,7 +121,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EE1B44492D3761DD002BF8B1 /* MyNativeWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EE1B44E52D376A10002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, EE1B445E2D3761DF002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MyNativeWidget; sourceTree = "<group>"; };
+		EE1B44492D3761DD002BF8B1 /* MyNativeWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EECB2C952D3E30E800E8B0B2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, EE1B445E2D3761DF002BF8B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MyNativeWidget; sourceTree = "<group>"; };
 		EECCF6662D38E45100BB0BA1 /* TestingWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EECCF6772D38E45300BB0BA1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestingWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
