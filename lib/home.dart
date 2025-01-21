@@ -11,6 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  StartLiveActivityResponse? _liveActivityResponse;
+  String _liveActivityState = "N/A";
+
   @override
   void initState() {
     super.initState();
@@ -19,17 +22,21 @@ class _HomeState extends State<Home> {
   }
 
   void _testUpdateLiveActivity() async {
-    await LiveActivityManager.startLiveActivity(data: {
-      'title': 'Placed',
+    _liveActivityResponse = await LiveActivityManager.startLiveActivity(data: {
+      'title': 'Order Placed',
       'description': 'Your order has been placed',
       'step': 0,
       'distance': 3,
     });
 
+    setState(() {
+      _liveActivityState = 'Started';
+    });
+
     await Future.delayed(const Duration(seconds: 5));
 
     await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Preparing',
+      'title': 'Preparing Order',
       'description': 'We are preparing your order',
       'step': 1,
       'distance': 3,
@@ -38,8 +45,8 @@ class _HomeState extends State<Home> {
     await Future.delayed(const Duration(seconds: 5));
 
     await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Delivering',
-      'description': 'We are delivering your order',
+      'title': 'Delivering Order',
+      'description': 'Delivering by 12:30 PM',
       'step': 2,
       'distance': 3,
     });
@@ -48,14 +55,23 @@ class _HomeState extends State<Home> {
 
     await LiveActivityManager.updateLiveActivity(data: {
       'title': 'Completed',
-      'description': 'All Done! 👌',
+      'description': 'Thank you for ordering with us! Enjoy!',
       'step': 3,
       'distance': 3,
     });
 
     await Future.delayed(const Duration(seconds: 5));
 
+    setState(() {
+      _liveActivityState = 'Closing';
+    });
+
     await LiveActivityManager.endLiveActivity();
+
+    setState(() {
+      _liveActivityState = 'Closed';
+      _liveActivityResponse = null;
+    });
   }
 
   @override
@@ -77,9 +93,8 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 8,
               ),
-              Text(
+              const Text(
                 "Press \"Simulate Place an Order,\" swipe down, and view the live activity on your lock screen.",
-                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -91,6 +106,21 @@ class _HomeState extends State<Home> {
                   onPressed: _testUpdateLiveActivity,
                   child: const Text('Simulate place an order'),
                 ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Live Activity state: $_liveActivityState",
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Live Activity id: ${_liveActivityResponse?.id ?? "null"}",
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Push token: ${_liveActivityResponse?.pushToken ?? "null"}",
+                textAlign: TextAlign.center,
               ),
             ],
           ),

@@ -69,10 +69,17 @@ class LiveActivitiesManager {
             activity = try Activity.request(
                 attributes: attributes,
                 content: activityContent!,
-                pushType: nil)
+                pushType: .token)
 
             liveActivityId = activity.id
-            result(liveActivityId)
+
+            Task {
+                for await pushToken in activity.pushTokenUpdates {
+                    let token = pushToken.map { String(format: "%02x", $0) }
+                        .joined()
+                    result(["id": liveActivityId, "pushToken": token])
+                }
+            }
         } catch let error {
             result(
                 FlutterError(
@@ -116,7 +123,8 @@ class LiveActivitiesManager {
 
     static func endLiveActivity(
         result: @escaping FlutterResult,
-        state: LiveActivitiesAppAttributes.ContentState? = nil, staleIn: Int? = nil,
+        state: LiveActivitiesAppAttributes.ContentState? = nil,
+        staleIn: Int? = nil,
         dismissalPolicy: ActivityUIDismissalPolicy
     ) {
         if !isAuthorizedCall(result: result) {

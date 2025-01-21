@@ -7,6 +7,20 @@ enum LiveActivityAction {
   endLiveActivity;
 }
 
+class StartLiveActivityResponse {
+  final String? id;
+  final String? pushToken;
+
+  StartLiveActivityResponse({required this.id, required this.pushToken});
+
+  factory StartLiveActivityResponse.fromDynamicMap(Map<dynamic, dynamic> map) {
+    return StartLiveActivityResponse(
+      id: map['id'],
+      pushToken: map['pushToken'],
+    );
+  }
+}
+
 class LiveActivityManager {
   LiveActivityManager._();
 
@@ -20,6 +34,11 @@ class LiveActivityManager {
     return _isInitialized;
   }
 
+  static int? _getTimeInMinutes(Duration? staleInMinutes) =>
+      (staleInMinutes?.inMinutes ?? 0) >= 1 ? staleInMinutes?.inMinutes : null;
+  static int? _getTimeInSeconds(Duration? staleInMinutes) =>
+      (staleInMinutes?.inSeconds ?? 0) >= 1 ? staleInMinutes?.inMinutes : null;
+
   static Future<void> init(String channelName) async {
     if (_isInitialized) return;
 
@@ -32,22 +51,27 @@ class LiveActivityManager {
     }
   }
 
-  static Future<void> startLiveActivity({Map<String, dynamic>? data}) async {
+  static Future<StartLiveActivityResponse?> startLiveActivity(
+      {Map<String, dynamic>? data, Duration? staleInMinutes}) async {
     if (!_isAuthorizedCall) {
-      return;
+      return null;
     }
 
     try {
-      await _platform.invokeMethod(
+      dynamic result = await _platform.invokeMethod(
         LiveActivityAction.startLiveActivity.name,
-        data,
+        {...(data ?? {}), "staleInMinutes": _getTimeInMinutes(staleInMinutes)},
       );
+
+      return StartLiveActivityResponse.fromDynamicMap(result);
     } catch (e) {
       debugPrint('Failed to start LiveActivity: $e');
+      return null;
     }
   }
 
-  static Future<void> updateLiveActivity({Map<String, dynamic>? data}) async {
+  static Future<void> updateLiveActivity(
+      {Map<String, dynamic>? data, Duration? staleInMinutes}) async {
     if (!_isAuthorizedCall) {
       return;
     }
@@ -55,14 +79,17 @@ class LiveActivityManager {
     try {
       await _platform.invokeMethod(
         LiveActivityAction.updateLiveActivity.name,
-        data,
+        {...(data ?? {}), "staleInMinutes": _getTimeInMinutes(staleInMinutes)},
       );
     } catch (e) {
       debugPrint('Failed to update LiveActivity: $e');
     }
   }
 
-  static Future<void> endLiveActivity({Map<String, dynamic>? data}) async {
+  static Future<void> endLiveActivity(
+      {Map<String, dynamic>? data,
+      Duration? staleInMinutes,
+      Duration? endInSecond}) async {
     if (!_isAuthorizedCall) {
       return;
     }
@@ -70,7 +97,11 @@ class LiveActivityManager {
     try {
       await _platform.invokeMethod(
         LiveActivityAction.endLiveActivity.name,
-        data,
+        {
+          ...(data ?? {}),
+          "staleInMinutes": _getTimeInMinutes(staleInMinutes),
+          "endInSecond": _getTimeInSeconds(endInSecond),
+        },
       );
     } catch (e) {
       debugPrint('Failed to end LiveActivity: $e');

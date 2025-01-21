@@ -5,6 +5,7 @@
 //  Created by Layhout Chea on 20/1/25.
 //
 
+import ActivityKit
 import Flutter
 
 class LiveActivitiesController {
@@ -51,13 +52,14 @@ class LiveActivitiesController {
         let distance: Int = data["distance"] as? Int ?? 0
         let title: String = data["title"] as? String ?? ""
         let description: String = data["description"] as? String ?? ""
+        let staleInMinutes: Int? = data["staleInMinutes"] as? Int ?? nil
 
         let initialState = LiveActivitiesAppAttributes.ContentState(
             step: step, distance: distance, title: title,
             description: description)
 
         LiveActivitiesManager.startLiveActivity(
-            result: result, state: initialState, staleIn: nil)
+            result: result, state: initialState, staleIn: staleInMinutes)
     }
 
     private static func updateLiveActivity(
@@ -67,22 +69,40 @@ class LiveActivitiesController {
         let distance: Int = data["distance"] as? Int ?? 0
         let title: String = data["title"] as? String ?? ""
         let description: String = data["description"] as? String ?? ""
+        let staleInMinutes: Int? = data["staleInMinutes"] as? Int ?? nil
 
         let updatedState = LiveActivitiesAppAttributes.ContentState(
             step: step, distance: distance, title: title,
             description: description)
 
         LiveActivitiesManager.updateLiveActivity(
-            result: result, state: updatedState, staleIn: nil)
+            result: result, state: updatedState, staleIn: staleInMinutes)
     }
 
     private static func endLiveActivity(
         result: @escaping FlutterResult, data: [String: Any]
     ) {
+        let step: Int = data["step"] as? Int ?? 0
+        let distance: Int = data["distance"] as? Int ?? 0
+        let title: String = data["title"] as? String ?? ""
+        let description: String = data["description"] as? String ?? ""
+        let staleInMinutes: Int? = data["staleInMinutes"] as? Int ?? nil
+        let endInSeconds: Int? = data["endInSecond"] as? Int ?? nil
+        let dismissalPolicy: ActivityUIDismissalPolicy =
+            endInSeconds != nil
+            ? .after(
+                Calendar.current.date(
+                    byAdding: .second, value: endInSeconds!, to: Date())!)
+            : .immediate
+
+        let endedState = LiveActivitiesAppAttributes.ContentState(
+            step: step, distance: distance, title: title,
+            description: description)
+
         LiveActivitiesManager.endLiveActivity(
             result: result,
-            dismissalPolicy: .after(
-                Calendar.current.date(
-                    byAdding: .second, value: 5, to: Date())!))
+            state: endedState,
+            staleIn: staleInMinutes,
+            dismissalPolicy: dismissalPolicy)
     }
 }
