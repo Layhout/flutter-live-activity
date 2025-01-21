@@ -10,32 +10,20 @@ import Flutter
 import Foundation
 
 class LiveActivitiesManager {
-    private static var liveActivityId: String?
-
     private static func isAuthorizedCall(
-        result: @escaping FlutterResult, checkId: Bool = true
+        result: @escaping FlutterResult
     ) -> Bool {
         if #available(iOS 16.1, *) {
-            if checkId && liveActivityId == nil {
-                result(
-                    FlutterError(
-                        code: "HAVE_NO_LIVE_ACTIVITY",
-                        message: "No live activity is currently in progress",
-                        details: nil))
-
-                return false
-            }
-
             return true
-        } else {
-            result(
-                FlutterError(
-                    code: "FEATURE_NOT_SUPPORTED",
-                    message: "Live activity supported on 16.1 and higher",
-                    details: nil))
-
-            return false
         }
+
+        result(
+            FlutterError(
+                code: "FEATURE_NOT_SUPPORTED",
+                message: "Live activity supported on 16.1 and higher",
+                details: nil))
+
+        return false
     }
 
     private static func getActivityContent(
@@ -53,11 +41,22 @@ class LiveActivitiesManager {
         return .init(state: state!, staleDate: staleDate)
     }
 
-    static func startLiveActivity(
+    public static func areLiveActivitiesEnabled(result: @escaping FlutterResult) {
+        guard #available(iOS 16.1, *), !ProcessInfo.processInfo.isiOSAppOnMac
+        else {
+            result(false)
+            return
+        }
+
+        result(ActivityAuthorizationInfo().areActivitiesEnabled)
+        return
+    }
+
+    public static func startLiveActivity(
         result: @escaping FlutterResult,
         state: LiveActivitiesAppAttributes.ContentState, staleIn: Int?
     ) {
-        if !isAuthorizedCall(result: result, checkId: false) {
+        if !isAuthorizedCall(result: result) {
             return
         }
 
@@ -71,13 +70,11 @@ class LiveActivitiesManager {
                 content: activityContent!,
                 pushType: .token)
 
-            liveActivityId = activity.id
-
             Task {
                 for await pushToken in activity.pushTokenUpdates {
                     let token = pushToken.map { String(format: "%02x", $0) }
                         .joined()
-                    result(["id": liveActivityId, "pushToken": token])
+                    result(["id": activity.id, "pushToken": token])
                 }
             }
         } catch let error {
@@ -90,9 +87,9 @@ class LiveActivitiesManager {
 
     }
 
-    static func updateLiveActivity(
-        result: @escaping FlutterResult,
-        state: LiveActivitiesAppAttributes.ContentState, staleIn: Int?
+    public static func updateLiveActivity(
+        result: @escaping FlutterResult, activityId: String,
+        state: LiveActivitiesAppAttributes.ContentState, staleIn: Int? = nil
     ) {
         if !isAuthorizedCall(result: result) {
             return
@@ -106,7 +103,7 @@ class LiveActivitiesManager {
             }
             guard
                 let activity = activities.first(where: {
-                    $0.id == liveActivityId
+                    $0.id == activityId
                 })
             else {
                 result(
@@ -121,8 +118,8 @@ class LiveActivitiesManager {
         }
     }
 
-    static func endLiveActivity(
-        result: @escaping FlutterResult,
+    public static func endLiveActivity(
+        result: @escaping FlutterResult, activityId: String,
         state: LiveActivitiesAppAttributes.ContentState? = nil,
         staleIn: Int? = nil,
         dismissalPolicy: ActivityUIDismissalPolicy
@@ -135,13 +132,40 @@ class LiveActivitiesManager {
 
         Task {
             for activity in Activity<LiveActivitiesAppAttributes>.activities {
-                if liveActivityId == activity.id {
+                if activityId == activity.id {
                     await activity.end(
                         activityContent, dismissalPolicy: dismissalPolicy)
                 }
             }
 
             result(nil)
+        }
+    }
+
+    public static func endAllLiveActivity(result: @escaping FlutterResult) {
+        if !isAuthorizedCall(result: result) {
+            return
+        }
+        
+        Task {
+            for activity in Activity<LiveActivitiesAppAttributes>.activities {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+            result(nil)
+        }
+    }
+    
+    public static func getAllActivityIds(result: @escaping FlutterResult) {
+        if !isAuthorizedCall(result: result) {
+            return
+        }
+        
+        Task {
+            var activityIds: [String] = []
+            for activity in Activity<LiveActivitiesAppAttributes>.activities {
+                activityIds.append(activity.id)
+            }
+            result(activityIds)
         }
     }
 }

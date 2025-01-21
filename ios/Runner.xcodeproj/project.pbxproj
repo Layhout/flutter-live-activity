@@ -15,6 +15,8 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		EE1B45902D37A1EF002BF8B1 /* LiveActivitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */; };
+		EE79768F2D3F544A00389C25 /* LiveActivitiesActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79768E2D3F543B00389C25 /* LiveActivitiesActionEnum.swift */; };
+		EE7976912D3F584400389C25 /* LiveActivitiesControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7976902D3F583600389C25 /* LiveActivitiesControllerProtocol.swift */; };
 		EEA9009E2D3DF7AC0064083D /* LiveActivitiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */; };
 		EEA900A42D3E01AB0064083D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44452D3761DC002BF8B1 /* WidgetKit.framework */; };
 		EEA900A52D3E01AB0064083D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */; };
@@ -82,6 +84,8 @@
 		EE1B44472D3761DD002BF8B1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		EE1B44602D3761E7002BF8B1 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesManager.swift; sourceTree = "<group>"; };
+		EE79768E2D3F543B00389C25 /* LiveActivitiesActionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesActionEnum.swift; sourceTree = "<group>"; };
+		EE7976902D3F583600389C25 /* LiveActivitiesControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesControllerProtocol.swift; sourceTree = "<group>"; };
 		EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesController.swift; sourceTree = "<group>"; };
 		EEA900A32D3E01AB0064083D /* LiveActivitiesAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LiveActivitiesAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -171,6 +175,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				EE7976902D3F583600389C25 /* LiveActivitiesControllerProtocol.swift */,
+				EE79768E2D3F543B00389C25 /* LiveActivitiesActionEnum.swift */,
 				EEA9009D2D3DF7940064083D /* LiveActivitiesController.swift */,
 				EE1B458F2D37A1E9002BF8B1 /* LiveActivitiesManager.swift */,
 				EE1B44602D3761E7002BF8B1 /* Runner.entitlements */,
@@ -378,8 +384,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE79768F2D3F544A00389C25 /* LiveActivitiesActionEnum.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				EE1B45902D37A1EF002BF8B1 /* LiveActivitiesManager.swift in Sources */,
+				EE7976912D3F584400389C25 /* LiveActivitiesControllerProtocol.swift in Sources */,
 				EEA9009E2D3DF7AC0064083D /* LiveActivitiesController.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);

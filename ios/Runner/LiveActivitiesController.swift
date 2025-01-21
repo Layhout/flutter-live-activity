@@ -8,8 +8,8 @@
 import ActivityKit
 import Flutter
 
-class LiveActivitiesController {
-    private static var managerChannel: FlutterMethodChannel? = nil
+class LiveActivitiesController: LiveActivitiesControllerProtocol {
+    internal static var managerChannel: FlutterMethodChannel? = nil
 
     public static func register(controller: FlutterViewController) {
         managerChannel = FlutterMethodChannel(
@@ -20,32 +20,49 @@ class LiveActivitiesController {
         managerChannel?.setMethodCallHandler(handleMethodCall)
     }
 
-    private static func handleMethodCall(
+    internal static func handleMethodCall(
         call: FlutterMethodCall, result: @escaping FlutterResult
     ) {
         let data = call.arguments as? [String: Any] ?? [String: Any]()
 
         if #available(iOS 16.1, *) {
             switch call.method {
-            case "startLiveActivity":
+            case LiveActivitiesActionEnum.isActivitiesAllowed.rawValue:
+                LiveActivitiesController.isActivitiesAllowed(result: result)
+                break
+            case LiveActivitiesActionEnum.startLiveActivity.rawValue:
                 LiveActivitiesController.startLiveActivity(
                     result: result, data: data)
                 break
-            case "updateLiveActivity":
+            case LiveActivitiesActionEnum.updateLiveActivity.rawValue:
                 LiveActivitiesController.updateLiveActivity(
                     result: result, data: data)
                 break
-            case "endLiveActivity":
+            case LiveActivitiesActionEnum.endLiveActivity.rawValue:
                 LiveActivitiesController.endLiveActivity(
                     result: result, data: data)
+                break
+            case LiveActivitiesActionEnum.endAllLiveActivity.rawValue:
+                LiveActivitiesController.endAllLiveActivity(result: result)
+                break
+            case LiveActivitiesActionEnum.getAllActivityIds.rawValue:
+                LiveActivitiesController.getAllActivityIds(result: result)
                 break
             default:
                 result(FlutterMethodNotImplemented)
             }
         }
     }
+    
+    internal static func isActivitiesAllowed(result: @escaping FlutterResult){
+        LiveActivitiesManager.areLiveActivitiesEnabled(result: result)
+    }
+    
+    internal static func getAllActivityIds(result: @escaping FlutterResult) {
+        LiveActivitiesManager.getAllActivityIds(result: result)
+    }
 
-    private static func startLiveActivity(
+    internal static func startLiveActivity(
         result: @escaping FlutterResult, data: [String: Any]
     ) {
         let step: Int = data["step"] as? Int ?? 0
@@ -62,9 +79,11 @@ class LiveActivitiesController {
             result: result, state: initialState, staleIn: staleInMinutes)
     }
 
-    private static func updateLiveActivity(
+    internal static func updateLiveActivity(
         result: @escaping FlutterResult, data: [String: Any]
     ) {
+        let activityId: String = data["activityId"] as? String ?? ""
+
         let step: Int = data["step"] as? Int ?? 0
         let distance: Int = data["distance"] as? Int ?? 0
         let title: String = data["title"] as? String ?? ""
@@ -76,12 +95,15 @@ class LiveActivitiesController {
             description: description)
 
         LiveActivitiesManager.updateLiveActivity(
-            result: result, state: updatedState, staleIn: staleInMinutes)
+            result: result, activityId: activityId, state: updatedState,
+            staleIn: staleInMinutes)
     }
 
-    private static func endLiveActivity(
+    internal static func endLiveActivity(
         result: @escaping FlutterResult, data: [String: Any]
     ) {
+        let activityId: String = data["activityId"] as? String ?? ""
+
         let step: Int = data["step"] as? Int ?? 0
         let distance: Int = data["distance"] as? Int ?? 0
         let title: String = data["title"] as? String ?? ""
@@ -101,8 +123,13 @@ class LiveActivitiesController {
 
         LiveActivitiesManager.endLiveActivity(
             result: result,
+            activityId: activityId,
             state: endedState,
             staleIn: staleInMinutes,
             dismissalPolicy: dismissalPolicy)
+    }
+    
+    internal static func endAllLiveActivity(result: @escaping FlutterResult) {
+        LiveActivitiesManager.endAllLiveActivity(result: result)
     }
 }

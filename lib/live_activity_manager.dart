@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-enum LiveActivityAction {
+enum LiveActivityActionEnum {
+  isActivitiesAllowed,
   startLiveActivity,
   updateLiveActivity,
-  endLiveActivity;
+  endLiveActivity,
+  endAllLiveActivity,
+  getAllActivityIds;
 }
 
 class StartLiveActivityResponse {
@@ -27,6 +32,12 @@ class LiveActivityManager {
   static bool _isInitialized = false;
   static late MethodChannel _platform;
   static bool get _isAuthorizedCall {
+    if (!Platform.isIOS) {
+      // TODO: Explore alternative options for Android.
+      debugPrint('Live Activity is currently supported only on iOS.');
+      return false;
+    }
+
     if (!_isInitialized) {
       debugPrint('LiveActivityManager is not initialized');
     }
@@ -51,6 +62,38 @@ class LiveActivityManager {
     }
   }
 
+  static Future<bool> isActivitiesAllowed() async {
+    if (!_isAuthorizedCall) {
+      return false;
+    }
+
+    try {
+      return await _platform.invokeMethod<bool?>(
+            LiveActivityActionEnum.isActivitiesAllowed.name,
+          ) ??
+          false;
+    } catch (e) {
+      debugPrint('Failed to check if LiveActivity is allowed: $e');
+      return false;
+    }
+  }
+
+  static Future<List<String>> getAllActivityIds() async {
+    if (!_isAuthorizedCall) {
+      return [];
+    }
+
+    try {
+      return await _platform.invokeMethod<List<String>?>(
+            LiveActivityActionEnum.isActivitiesAllowed.name,
+          ) ??
+          [];
+    } catch (e) {
+      debugPrint('Failed to get all activity ids: $e');
+      return [];
+    }
+  }
+
   static Future<StartLiveActivityResponse?> startLiveActivity(
       {Map<String, dynamic>? data, Duration? staleInMinutes}) async {
     if (!_isAuthorizedCall) {
@@ -59,7 +102,7 @@ class LiveActivityManager {
 
     try {
       dynamic result = await _platform.invokeMethod(
-        LiveActivityAction.startLiveActivity.name,
+        LiveActivityActionEnum.startLiveActivity.name,
         {...(data ?? {}), "staleInMinutes": _getTimeInMinutes(staleInMinutes)},
       );
 
@@ -71,15 +114,21 @@ class LiveActivityManager {
   }
 
   static Future<void> updateLiveActivity(
-      {Map<String, dynamic>? data, Duration? staleInMinutes}) async {
+      {required String activityId,
+      Map<String, dynamic>? data,
+      Duration? staleInMinutes}) async {
     if (!_isAuthorizedCall) {
       return;
     }
 
     try {
       await _platform.invokeMethod(
-        LiveActivityAction.updateLiveActivity.name,
-        {...(data ?? {}), "staleInMinutes": _getTimeInMinutes(staleInMinutes)},
+        LiveActivityActionEnum.updateLiveActivity.name,
+        {
+          ...(data ?? {}),
+          "staleInMinutes": _getTimeInMinutes(staleInMinutes),
+          "activityId": activityId
+        },
       );
     } catch (e) {
       debugPrint('Failed to update LiveActivity: $e');
@@ -87,7 +136,8 @@ class LiveActivityManager {
   }
 
   static Future<void> endLiveActivity(
-      {Map<String, dynamic>? data,
+      {required String activityId,
+      Map<String, dynamic>? data,
       Duration? staleInMinutes,
       Duration? endInSecond}) async {
     if (!_isAuthorizedCall) {
@@ -96,15 +146,29 @@ class LiveActivityManager {
 
     try {
       await _platform.invokeMethod(
-        LiveActivityAction.endLiveActivity.name,
+        LiveActivityActionEnum.endLiveActivity.name,
         {
           ...(data ?? {}),
           "staleInMinutes": _getTimeInMinutes(staleInMinutes),
           "endInSecond": _getTimeInSeconds(endInSecond),
+          "activityId": activityId,
         },
       );
     } catch (e) {
       debugPrint('Failed to end LiveActivity: $e');
+    }
+  }
+
+  static Future<void> endAllLiveActivity() async {
+    if (!_isAuthorizedCall) {
+      return;
+    }
+
+    try {
+      await _platform
+          .invokeMethod(LiveActivityActionEnum.endAllLiveActivity.name);
+    } catch (e) {
+      debugPrint('Failed to end all LiveActivity: $e');
     }
   }
 }

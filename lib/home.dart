@@ -35,30 +35,36 @@ class _HomeState extends State<Home> {
 
     await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Preparing Order',
-      'description': 'We are preparing your order',
-      'step': 1,
-      'distance': 3,
-    });
+    await LiveActivityManager.updateLiveActivity(
+        activityId: _liveActivityResponse?.id ?? "",
+        data: {
+          'title': 'Preparing Order',
+          'description': 'We are preparing your order',
+          'step': 1,
+          'distance': 3,
+        });
 
     await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Delivering Order',
-      'description': 'Delivering by 12:30 PM',
-      'step': 2,
-      'distance': 3,
-    });
+    await LiveActivityManager.updateLiveActivity(
+        activityId: _liveActivityResponse?.id ?? "",
+        data: {
+          'title': 'Delivering Order',
+          'description': 'Delivering by 12:30 PM',
+          'step': 2,
+          'distance': 3,
+        });
 
     await Future.delayed(const Duration(seconds: 5));
 
-    await LiveActivityManager.updateLiveActivity(data: {
-      'title': 'Completed',
-      'description': 'Thank you for ordering with us! Enjoy!',
-      'step': 3,
-      'distance': 3,
-    });
+    await LiveActivityManager.updateLiveActivity(
+        activityId: _liveActivityResponse?.id ?? "",
+        data: {
+          'title': 'Completed',
+          'description': 'Thank you for ordering with us! Enjoy!',
+          'step': 3,
+          'distance': 3,
+        });
 
     await Future.delayed(const Duration(seconds: 5));
 
@@ -66,7 +72,10 @@ class _HomeState extends State<Home> {
       _liveActivityState = 'Closing';
     });
 
-    await LiveActivityManager.endLiveActivity();
+    await LiveActivityManager.endLiveActivity(
+      activityId: _liveActivityResponse?.id ?? "",
+      endInSecond: const Duration(seconds: 5),
+    );
 
     setState(() {
       _liveActivityState = 'Closed';
