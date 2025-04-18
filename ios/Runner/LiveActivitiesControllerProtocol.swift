@@ -18,6 +18,7 @@ protocol LiveActivitiesControllerProtocol {
         result: @escaping FlutterResult, data: [String: Any])
     static func endLiveActivity(
         result: @escaping FlutterResult, data: [String: Any])
+    static func endAllLiveActivity(result: @escaping FlutterResult)
     static func isActivitiesAllowed(result: @escaping FlutterResult)
     static func getAllActivityIds(result: @escaping FlutterResult)
 }

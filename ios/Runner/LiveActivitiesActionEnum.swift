@@ -5,15 +5,6 @@
 //  Created by Layhout Chea on 21/1/25.
 //
 
-/*
- isActivitiesAllowed,
-   startLiveActivity,
-   updateLiveActivity,
-   endLiveActivity,
-   endAllLiveActivity,
-   getAllActivityIds;
- */
-
 enum LiveActivitiesActionEnum: String {
     case isActivitiesAllowed = "isActivitiesAllowed"
     case startLiveActivity = "startLiveActivity"
